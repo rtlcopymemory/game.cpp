@@ -1,3 +1,5 @@
+using namespace std;
+
 struct Vector2D {
     int x;
     int y;
@@ -7,28 +9,35 @@ struct Vector2D {
         y = scih.y;
     }
 
-    Vector2D(int _x, int _y){
+    Vector2D(int _x, int _y) {
         x = _x;
         y = _y;
+    }
+
+    Vector2D() {
+        x = 0;
+        y = 0;
     }
 };
 
 //-------------------------- Classes --------------------------------
 
-class Player : public Entity {
-    public:
-        Player() {
-            gfx = '+';
-        }
-};
-
 class Entity {
-    private:
+    protected:
         Vector2D _pos;
         char _gfx;
     public:
+        Entity() {
+            _pos = Vector2D(0, 0);
+            _gfx = 'k';
+        }
+
         Entity(Vector2D spawn, char gfx) {
             _pos = spawn;
+            _gfx = gfx;
+        }
+
+        Entity(char gfx) {
             _gfx = gfx;
         }
 
@@ -39,10 +48,44 @@ class Entity {
         void setPos(Vector2D pos) {
             _pos = pos;
         }
-}
+
+        void move(Vector2D dir) {
+            _pos.x += dir.x;
+            _pos.y += dir.y;
+        }
+
+        char getGfx() {
+            return _gfx;
+        }
+};
+
+class Player : public Entity {
+    public:
+        Player() {
+            _gfx = '+';
+        }
+};
 
 //-------------------------- Functions --------------------------------
 
-void drawLevel() {
-
+void drawLevel(list <Entity> lEnt) {
+    system("clear");
+    list <Entity> :: iterator it;
+    for (int height = 0; height <= 10; height++) {
+        for (int width = 0; width <= 10; width++) {
+            //Render screen
+            bool rendered = false;
+            for (it = lEnt.begin(); it != lEnt.end(); ++it) {
+                if ((it->getPos()).x == width && (it->getPos()).y == height) {
+                    cout << it->getGfx();
+                    rendered = true;
+                }
+            }
+            if (!rendered) {
+                cout << " ";
+            }
+        }
+        cout << "|" << endl;
+    }
+    cout << "----------\n";
 }
