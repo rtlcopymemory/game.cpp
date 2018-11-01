@@ -9,6 +9,10 @@ struct Vector2D {
         y = scih.y;
     }
 
+    bool operator == (const Vector2D& scih) {
+        return ((this->x == scih.x) && (this->y == scih.y));
+    }
+
     Vector2D(int _x, int _y) {
         x = _x;
         y = _y;
@@ -54,6 +58,25 @@ class Entity {
             _pos.y += dir.y;
         }
 
+        void moveCollisions(Vector2D dir, list <Entity> lEnt) {
+            // newx = _pos.x + dir.x;
+            // newy = _pos.y + dir.y;
+            Vector2D newPos(_pos.x + dir.x, _pos.y + dir.y);
+            bool colliding = false;
+
+            list <Entity> :: iterator it;
+            for (it = lEnt.begin(); it != lEnt.end(); ++it) {
+                if (it->getPos() == newPos) {
+                    colliding = true;
+                }
+            }
+
+            if (!colliding) {
+                _pos.x = newPos.x;
+                _pos.y = newPos.y;
+            }
+        }
+
         char getGfx() {
             return _gfx;
         }
@@ -76,7 +99,7 @@ void drawLevel(list <Entity> lEnt) {
         for (int width = 0; width <= 10; width++) {
             //Render screen
             bool rendered = false;
-            for (it = lEnt.begin(); it != lEnt.end(); ++it) {
+            for (it = lEnt.begin(); it != lEnt.end() && !rendered; ++it) {
                 if ((it->getPos()).x == width && (it->getPos()).y == height) {
                     cout << it->getGfx();
                     rendered = true;

@@ -73,28 +73,16 @@ void getInput() {
 
     if (d == 'a') {
         if ((pplayer->getPos()).x > 0)
-            pplayer->move(Vector2D(
-                -1,
-                0
-            ));
+            pplayer->moveCollisions(Vector2D(-1, 0), lEntities);
     } else if (d == 'w') {
         if ((pplayer->getPos()).y > 0)
-            pplayer->move(Vector2D(
-                0,
-                -1
-            ));
+            pplayer->moveCollisions(Vector2D(0, -1), lEntities);
     } else if (d == 'd') {
         if ((pplayer->getPos()).x < 11)
-            pplayer->move(Vector2D(
-                1,
-                0
-            ));
+            pplayer->moveCollisions(Vector2D(1, 0), lEntities);
     } else if (d == 's') {
         if ((pplayer->getPos()).y < 11)
-            pplayer->move(Vector2D(
-                0,
-                1
-            ));
+            pplayer->moveCollisions(Vector2D(0, 1), lEntities);
     } else if (d == 'l') {
         continueL = false;
     }
