@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 #include <time.h>
-#include <ncurses.h>
 #include <list>
 #include <iterator>
 #include "rest.h"
@@ -11,6 +9,7 @@ using namespace std;
 
 list <Entity> lEntities;
 Entity* pplayer;
+bool continueL = true;
 
 void setup();
 void getInput();
@@ -18,15 +17,19 @@ void getInput();
 int main() {
     //system("clear");
     system("clear");
+
+    //get unbuffered inputs: system("/bin/stty raw"); and restore with system("/bin/stty cooked");
+    system("/bin/stty raw");
+
     setup();
     drawLevel(lEntities);
 
-    while(true) {
+    while(continueL) {
         //Loop
         getInput();
         drawLevel(lEntities);
     }
-
+    system("/bin/stty cooked");
     return 0;
 }
 
@@ -66,7 +69,7 @@ void setup() {
 
 void getInput() {
     char d;
-    d = getch();
+    cin.get(d);
 
     if (d == 'a') {
         if ((pplayer->getPos()).x > 0)
@@ -92,5 +95,7 @@ void getInput() {
                 0,
                 1
             ));
+    } else if (d == 'l') {
+        continueL = false;
     }
 }

@@ -70,6 +70,7 @@ class Player : public Entity {
 
 void drawLevel(list <Entity> lEnt) {
     system("clear");
+    system("/bin/stty cooked");
     list <Entity> :: iterator it;
     for (int height = 0; height <= 10; height++) {
         for (int width = 0; width <= 10; width++) {
@@ -88,4 +89,6 @@ void drawLevel(list <Entity> lEnt) {
         cout << "|" << endl;
     }
     cout << "----------\n";
+    cout << "wasd = move | l = quit\n";
+    system("/bin/stty raw");
 }
